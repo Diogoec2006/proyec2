@@ -1,13 +1,13 @@
 import React from 'react'
-import { 
-  Calculator, 
-  FlaskConical, 
-  History, 
-  Volume2, 
-  VolumeX, 
-  Moon, 
-  Sun, 
-  Cloud 
+import {
+  Calculator,
+  FlaskConical,
+  History,
+  Volume2,
+  VolumeX,
+  Moon,
+  Sun,
+  Cloud
 } from './Icons'
 
 export function Header({
@@ -46,7 +46,7 @@ export function Header({
           <Calculator size={18} />
         </div>
         <div className="brand-title">
-          <span>Calculadora</span>
+          <span>Calculadora cientifica</span>
           <span className="aws-badge">AWS Ready</span>
         </div>
       </div>
