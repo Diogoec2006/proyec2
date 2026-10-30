@@ -40,12 +40,19 @@ jobs:
           AWS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          CF_DIST: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
           if [ -z "$AWS_KEY" ] || [ -z "$AWS_SECRET" ] || [ -z "$S3_BUCKET" ]; then
             echo "has_creds=false" >> $GITHUB_OUTPUT
+            echo "has_cf=false" >> $GITHUB_OUTPUT
             echo "::warning title=Secrets de AWS no configurados::Para desplegar automáticamente en AWS S3, debes configurar los Secrets en GitHub: Settings > Secrets and variables > Actions (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_BUCKET_NAME)."
           else
             echo "has_creds=true" >> $GITHUB_OUTPUT
+            if [ -n "$CF_DIST" ]; then
+              echo "has_cf=true" >> $GITHUB_OUTPUT
+            else
+              echo "has_cf=false" >> $GITHUB_OUTPUT
+            fi
           fi
 
       - name: Configurar credenciales de AWS
@@ -62,7 +69,7 @@ jobs:
           aws s3 sync dist/ s3://${{ secrets.AWS_S3_BUCKET_NAME }} --delete
 
       - name: Invalidar caché de CloudFront CDN
-        if: steps.check-aws.outputs.has_creds == 'true' && secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID != ''
+        if: steps.check-aws.outputs.has_cf == 'true'
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} \
