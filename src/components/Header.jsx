@@ -46,7 +46,7 @@ export function Header({
           <Calculator size={18} />
         </div>
         <div className="brand-title">
-          <span>Calculadora cientifica</span>
+          <span>Calculadora cientifica Grupo 3</span>
           <span className="aws-badge">AWS Ready</span>
         </div>
       </div>
