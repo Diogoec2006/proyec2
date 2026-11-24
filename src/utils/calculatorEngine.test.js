@@ -4,7 +4,7 @@ import { evaluateExpression, formatResult, factorial } from './calculatorEngine'
 describe('Motor Matemático de la Calculadora', () => {
   describe('Operaciones Básicas', () => {
     it('debe sumar números correctamente', () => {
-      expect(evaluateExpression('5 + 3')).toBe(10)
+      expect(evaluateExpression('5 + 3')).toBe(8)
       expect(evaluateExpression('0.1 + 0.2')).toBeCloseTo(0.3)
     })
 
