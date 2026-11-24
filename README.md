@@ -258,4 +258,4 @@ proyec2/
 ## 📜 Licencia
 
 MIT © 2026. Proyecto desarrollado con React y preparado para despliegue profesional en AWS.
-
+<!-- Historia de Usuario HU-04 verificada por el equipo Kanban-XP -->
