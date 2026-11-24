@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Calculator,
   FlaskConical,
@@ -7,8 +7,8 @@ import {
   VolumeX,
   Moon,
   Sun,
-  Cloud
-} from './Icons'
+  Cloud,
+} from "./Icons";
 
 export function Header({
   isScientific,
@@ -20,24 +20,24 @@ export function Header({
   historyCount,
   setIsHistoryOpen,
   setIsAwsModalOpen,
-  sound
+  sound,
 }) {
   const toggleSound = () => {
-    const next = !isMuted
-    setIsMuted(next)
-    sound.enabled = !next
-    if (!next) sound.playClick()
-  }
+    const next = !isMuted;
+    setIsMuted(next);
+    sound.enabled = !next;
+    if (!next) sound.playClick();
+  };
 
   const toggleTheme = () => {
-    sound.playClick()
-    setIsDarkMode(!isDarkMode)
-  }
+    sound.playClick();
+    setIsDarkMode(!isDarkMode);
+  };
 
   const toggleScientific = () => {
-    sound.playClick()
-    setIsScientific(!isScientific)
-  }
+    sound.playClick();
+    setIsScientific(!isScientific);
+  };
 
   return (
     <header className="header">
@@ -46,16 +46,16 @@ export function Header({
           <Calculator size={18} />
         </div>
         <div className="brand-title">
-          <span>Calculadora Científica Grupo 3</span>
+          <span>Calculadora Científica Grupo Erick Diogo #3</span>
           <span className="aws-badge">AWS Ready</span>
         </div>
       </div>
 
       <div className="header-controls">
         <button
-          className={`icon-btn ${isScientific ? 'active' : ''}`}
+          className={`icon-btn ${isScientific ? "active" : ""}`}
           onClick={toggleScientific}
-          title={isScientific ? 'Modo Básico' : 'Modo Científico'}
+          title={isScientific ? "Modo Básico" : "Modo Científico"}
           aria-label="Alternar modo científico"
         >
           <FlaskConical size={16} />
@@ -64,7 +64,7 @@ export function Header({
         <button
           className="icon-btn"
           onClick={toggleSound}
-          title={isMuted ? 'Activar sonido' : 'Silenciar'}
+          title={isMuted ? "Activar sonido" : "Silenciar"}
           aria-label="Alternar sonido"
         >
           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -73,7 +73,7 @@ export function Header({
         <button
           className="icon-btn"
           onClick={toggleTheme}
-          title={isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
+          title={isDarkMode ? "Modo Claro" : "Modo Oscuro"}
           aria-label="Alternar tema visual"
         >
           {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
@@ -82,21 +82,23 @@ export function Header({
         <button
           className="icon-btn"
           onClick={() => {
-            sound.playClick()
-            setIsHistoryOpen(true)
+            sound.playClick();
+            setIsHistoryOpen(true);
           }}
           title="Historial de cálculos"
           aria-label="Ver historial"
         >
           <History size={16} />
-          {historyCount > 0 && <span className="badge-counter">{historyCount}</span>}
+          {historyCount > 0 && (
+            <span className="badge-counter">{historyCount}</span>
+          )}
         </button>
 
         <button
           className="icon-btn"
           onClick={() => {
-            sound.playClick()
-            setIsAwsModalOpen(true)
+            sound.playClick();
+            setIsAwsModalOpen(true);
           }}
           title="Cómo desplegar en AWS"
           aria-label="Guía de despliegue AWS"
@@ -105,5 +107,5 @@ export function Header({
         </button>
       </div>
     </header>
-  )
+  );
 }
