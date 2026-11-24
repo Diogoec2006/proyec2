@@ -49,6 +49,59 @@ Genera la carpeta optimizada y minificada `dist/`.
 
 ---
 
+## 🌿 Estrategia de Ramas y Trabajo en Equipo (GitHub Flow)
+
+El proyecto utiliza la estrategia **GitHub Flow** para la integración continua de Extreme Programming (XP) y revisión entre pares:
+
+- **`main` (Rama protegida):** Contiene el código en producción listo para despliegue. Solo acepta cambios mediante Pull Request (PR) aprobados tras pasar las pruebas automáticas.
+- **`feature/*`:** Ramas de desarrollo creadas a partir de `main` para cada nueva funcionalidad o historia de usuario (ej. `feature/calculo-cientifico`).
+- **`fix/*`:** Ramas destinadas a corrección de defectos o pruebas fallidas (ej. `fix/test-correction`).
+
+### Flujo de Integración:
+1. Crear una rama de funcionalidad: `git checkout -b feature/nueva-mejora`
+2. Realizar cambios y verificar pruebas en local: `npm run test`
+3. Subir la rama y abrir una **Solicitud de Incorporación (Pull Request)** en GitHub.
+4. El pipeline de GitHub Actions se ejecuta automáticamente (`pull_request`) validando dependencias, pruebas y compilación.
+5. Un compañero del equipo revisa el código (*Peer Review*) y aprueba el cambio.
+6. Se realiza el merge a `main`, lo que dispara automáticamente el despliegue a la nube.
+
+---
+
+## 🧪 Verificación Funcional (Casos de Prueba)
+
+### 1. Recorrido Principal (Happy Path)
+- **Operación:** `(15 * 3) + 5`
+- **Resultado esperado:** `50`
+- **Verificación:** Evalúa la jerarquía de operadores, muestra el resultado en pantalla y lo registra en el historial persistente.
+
+### 2. Caso de Error Controlado
+- **Operación:** `25 / 0`
+- **Resultado esperado:** `"División por cero"`
+- **Verificación:** El motor matemático intercepta la división indeterminada y muestra un mensaje amigable sin generar excepciones no controladas ni colapsar la aplicación.
+
+---
+
+## 🔄 Plan de Recuperación y Marcha Atrás (Rollback)
+
+Si se detecta un incidente en producción tras un despliegue:
+
+1. **Reversión rápida mediante Git (Recomendado):**
+   ```bash
+   git revert HEAD --no-edit
+   git push origin main
+   ```
+   *GitHub Actions detectará el push a `main`, compilará la versión anterior probada y actualizará S3/CloudFront automáticamente en menos de 2 minutos.*
+
+2. **Reversión a un Tag o Commit específico:**
+   ```bash
+   git checkout v1.0.0
+   npm run build
+   aws s3 sync dist/ s3://tu-bucket-calculadora --delete
+   aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+   ```
+
+---
+
 ## ☁️ Guías de Despliegue en AWS
 
 Este proyecto está preparado con configuraciones nativas para **4 alternativas de despliegue en AWS**:
